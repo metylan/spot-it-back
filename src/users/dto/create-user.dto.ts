@@ -1,16 +1,17 @@
+/* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
 	@ApiProperty()
 	@IsEmail()
-		mail!: string;
+	mail!: string;
 
 	@ApiProperty()
 	@IsNotEmpty()
-		name!: string;
+	name!: string;
 
 	@ApiProperty()
 	@IsNotEmpty()
-		password!: string;
+	password!: string;
 }
