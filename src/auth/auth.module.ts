@@ -10,9 +10,9 @@ import { TokenController } from './token/token.controller';
 	providers: [UsersService],
 	imports: [
 		JwtModule.register({
-			secret: process.env.JWT_SECRET||'banana',
+			secret: process.env.JWT_SECRET || 'banana',
 			signOptions: {
-				audience: process.env.JWt_AUDIENCE||'pazzapi.com'
+				audience: process.env.JWt_AUDIENCE || 'GreenYourLook.com'
 			}
 		}),
 		TypeOrmModule.forFeature([User])]

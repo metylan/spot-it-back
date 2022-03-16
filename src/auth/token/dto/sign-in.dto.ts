@@ -1,15 +1,16 @@
+/* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
 
 export class SignInDto {
 	@ApiProperty()
-		access_token: string;
+	access_token: string;
 
 	@ApiProperty()
-		scope = '*';
+	scope = '*';
 
 	@ApiProperty()
-		expires_in: number;
+	expires_in: number;
 
 	@ApiProperty()
-		grant_type = 'password';
+	grant_type = 'password';
 }
