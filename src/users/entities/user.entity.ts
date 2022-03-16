@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
+import { Roles } from 'src/security/role.enum';
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -21,8 +22,8 @@ export class User {
 	@Column({ length: 100 })
 	name!: string;
 
-	@ApiProperty()
+	@ApiProperty({ enum: Roles })
 	@Index()
-	@Column({ type: 'boolean', default: false })
-	isAdmin!: boolean;
+	@Column({ type: 'enum', enum: Roles, default: Roles.User })
+	role!: Roles;
 }

@@ -34,7 +34,7 @@ export class TokenController {
 					cr.expires_in = 3600;
 					cr.access_token = await this.jwts.sign({
 						id: usr.id,
-						isAdmin: usr.isAdmin
+						role: usr.role
 					}, {
 						subject: mail,
 						expiresIn: 3600
