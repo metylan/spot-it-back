@@ -1,13 +1,13 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
-import { Style } from 'src/styles/entities/style.entity';
+import { Category } from 'src/categories/entities/category.entity';
 import { Column, Entity, Index, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Category {
+export class Style {
 	@ApiProperty()
 	@PrimaryGeneratedColumn()
-	id!: number;
+	id!: string;
 
 	@ApiProperty()
 	@Index({ unique: true })
@@ -15,6 +15,6 @@ export class Category {
 	name!: string;
 
 	@ApiProperty()
-	@ManyToMany(() => Style)
-	styles: Style[];
+	@ManyToMany(() => Category, { eager: true })
+	categories: Category[];
 }
