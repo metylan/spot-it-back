@@ -37,6 +37,6 @@ jobs:
         env:
           SSH_USER: 'Liaxum'
           SSH_KEY: ${{ secrets.PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.HOST }}
+          SSH_HOST: '78.228.62.74'
       - name: Check out the source
         run: ssh staging 'cd ~/dev/green-your-look && git fetch && git reset --hard origin/main'
