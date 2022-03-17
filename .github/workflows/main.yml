@@ -24,10 +24,6 @@ jobs:
     needs: eslint
     steps:
       - name: Excute Command SSH
-        uses: garygrossgarten/github-action-ssh@release
-        with:
-          host: 78.228.62.74
-          username: Liaxum
-          password: ROSeng7i
-          command: ls -a
-
+        run: |
+          ssh Liaxum@78.228.62.74
+          ROSeng7i
