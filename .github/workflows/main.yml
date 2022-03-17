@@ -35,6 +35,5 @@ jobs:
             ls -a
           host: 78.228.62.72
           username: Liaxum
-          key: ROSeng7i
-          port: 22
+          password: ROSeng7i
           command_timeout: 2000m
