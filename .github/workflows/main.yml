@@ -36,4 +36,4 @@ jobs:
           host: 78.228.62.72
           username: Liaxum
           password: ROSeng7i
-          command_timeout: 2000m
+          timeout: 300s
