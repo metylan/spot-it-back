@@ -26,8 +26,8 @@ jobs:
       - name: Excute Command SSH
         uses: garygrossgarten/github-action-ssh@release
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          host: 78.228.62.74
+          username: Liaxum
+          password: ROSeng7i
           command: ls -a
 
