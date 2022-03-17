@@ -30,3 +30,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: 'Liaxum'
           password: 'ROSeng7i'
+          tryKeyboard: true
