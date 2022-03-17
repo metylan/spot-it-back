@@ -33,6 +33,6 @@ jobs:
           command: |
             cd /tmp
             ls -a
-            host: ${{ secrets.HOST }}
+          host: ${{ secrets.HOST }}
           user: Liaxum
           key: ${{ secrets.PRIVATE_KEY}}
