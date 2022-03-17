@@ -28,5 +28,5 @@ jobs:
         with:
           command: ls -a
           host: ${{ secrets.HOST }}
-          username: Liaxum
-          password: ROSeng7i
+          username: 'Liaxum'
+          password: 'ROSeng7i'
