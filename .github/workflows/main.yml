@@ -38,11 +38,5 @@ jobs:
           SSH_USER: 'Liaxum'
           SSH_KEY: ${{ secrets.PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.HOST }}
-      - name: Stop the server
-        run: ssh staging 'sudo systemctl stop mds-API'
-
       - name: Check out the source
         run: ssh staging 'cd ~/dev/green-your-look && git fetch && git reset --hard origin/main'
-      - name: Start the server
-        if: ${{ always() }}
-        run: ssh staging 'sudo systemctl start mds-API'
