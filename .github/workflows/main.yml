@@ -1,0 +1,38 @@
+name: MDS Project Back CI
+
+on: 
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  eslint:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 17
+        uses: actions/setup-node@v3
+        with:
+          node-version: "17"
+          cache: 'npm'
+      - run: npm i
+      - run: npm run lint
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 17
+        uses: actions/setup-node@v3
+      - name: ls -a via ssh
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /tmp
+            ls -a
+            host: ${{ secrets.HOST }}
+          user: Liaxum
+          key: ${{ secrets.PRIVATE_KEY}}
