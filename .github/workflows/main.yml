@@ -28,10 +28,4 @@ jobs:
       - name: Use Node.js 17
         uses: actions/setup-node@v3
       - name: ls -a via ssh
-        uses: matheusvanzan/sshpass-action@v2        
-        with:
-          host: ${{ secrets.HOST }}
-          user: ${{ secrets.USERNAME }}
-          pass: ROSeng7i
-          run: |
-            ls
+        run: sshpass -p ROSeng7i ssh Liaxum@78.228.62.74
