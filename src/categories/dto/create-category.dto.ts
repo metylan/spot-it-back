@@ -6,4 +6,8 @@ export class CreateCategoryDto {
 	@ApiProperty()
 	@IsNotEmpty()
 	name!: string;
+
+	@ApiProperty()
+	@IsNotEmpty()
+	image!: string;
 }

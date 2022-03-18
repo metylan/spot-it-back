@@ -7,4 +7,7 @@ export class CreateStyleDto {
 	@IsNotEmpty()
 	name!: string;
 
+	@ApiProperty()
+	@IsNotEmpty()
+	image!: string;
 }

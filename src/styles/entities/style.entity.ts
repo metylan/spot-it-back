@@ -17,4 +17,8 @@ export class Style {
 	@ApiProperty()
 	@ManyToMany(() => Category, { eager: true })
 	categories: Category[];
+
+	@ApiProperty()
+	@Column()
+	image!: string;
 }
