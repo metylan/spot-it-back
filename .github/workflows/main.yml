@@ -31,4 +31,4 @@ jobs:
       - name: Deploy
         run: |
           npm i
-          npm run ssh-deploy
+          echo ${{secrets.PRIVATE_KEY}} | npm run ssh-deploy
