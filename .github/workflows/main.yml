@@ -35,3 +35,4 @@ jobs:
             ls -a
           host: ${{ secrets.HOST }}
           username: ${{ sercrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY}}
