@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import { Role } from 'src/security/roles.enum';
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -16,6 +17,7 @@ export class User {
 
 	@ApiProperty()
 	@Column({ length: 100 })
+	@Exclude()
 	hash!: string;
 
 	@ApiProperty()
