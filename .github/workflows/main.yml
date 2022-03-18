@@ -28,11 +28,10 @@ jobs:
       - name: Use Node.js 17
         uses: actions/setup-node@v3
       - name: ls -a via ssh
-        uses: appleboy/ssh-action@master
+        uses: matheusvanzan/sshpass-action@v2        
         with:
-          script: |
-            cd /tmp
-            ls -a
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY}}
+          user: ${{ secrets.USERNAME }}
+          pass: ROSeng7i
+          run: |
+            ls
