@@ -3,9 +3,10 @@ import { StylesService } from './styles.service';
 import { StylesController } from './styles.controller';
 import { Style } from './entities/style.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Look } from 'src/looks/entities/look.entity';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Style])],
+	imports: [TypeOrmModule.forFeature([Style, Look])],
 	controllers: [StylesController],
 	providers: [StylesService]
 })

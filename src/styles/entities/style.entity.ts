@@ -1,7 +1,8 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
 import { Category } from 'src/categories/entities/category.entity';
-import { Column, Entity, Index, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Look } from 'src/looks/entities/look.entity';
+import { Column, Entity, Index, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Style {
@@ -21,4 +22,7 @@ export class Style {
 	@ApiProperty()
 	@Column()
 	image!: string;
+
+	@OneToMany(() => Look, (look: Look) => look.style)
+	looks: Look[];
 }
