@@ -27,5 +27,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Use Node.js 17
         uses: actions/setup-node@v3
-      - name: ls -a via ssh
-        run: sshpass -p ROSeng7i ssh Liaxum@78.228.62.74
+      - name: Deploy
+        run: npm run ssh-deploy
