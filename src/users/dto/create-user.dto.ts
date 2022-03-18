@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import { Roles } from 'src/security/role.enum';
+import { Role } from 'src/security/roles.enum';
 
 export class CreateUserDto {
 	@ApiProperty()
@@ -16,6 +16,6 @@ export class CreateUserDto {
 	@IsNotEmpty()
 	password!: string;
 
-	@ApiProperty({ enum: Roles })
-	role!: Roles;
+	@ApiProperty({ enum: Role })
+	role!: Role;
 }
