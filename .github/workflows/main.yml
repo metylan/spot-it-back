@@ -33,12 +33,5 @@ jobs:
           script: |
             cd /tmp
             ls -a
-<<<<<<< HEAD
-          host: 78.228.62.72
-          username: Liaxum
-          password: ROSeng7i
-          timeout: 300s
-=======
           host: ${{ secrets.HOST }}
           username: ${{ sercrets.USERNAME }}
->>>>>>> 8d4bd6f8e91f96610f74f4963952ad52c34f8def
