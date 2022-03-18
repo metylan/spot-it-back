@@ -34,5 +34,5 @@ jobs:
             cd /tmp
             ls -a
           host: ${{ secrets.HOST }}
-          username: ${{ sercrets.USERNAME }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY}}
