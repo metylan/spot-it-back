@@ -13,8 +13,4 @@ export class Look {
 	@Index({ unique: true })
 	@Column()
 	name!: string;
-
-	@ApiProperty()
-	@ManyToOne(() => Style, (style: Style) => style.looks)
-	style!: Style;
 }

@@ -2,7 +2,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Category } from 'src/categories/entities/category.entity';
 import { Look } from 'src/looks/entities/look.entity';
-import { Column, Entity, Index, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Style {
@@ -14,15 +14,13 @@ export class Style {
 	@Index({ unique: true })
 	@Column()
 	name!: string;
-
-	@ApiProperty()
-	@ManyToMany(() => Category, { eager: true })
-	categories: Category[];
-
+	
 	@ApiProperty()
 	@Column()
 	image!: string;
 
-	@OneToMany(() => Look, (look: Look) => look.style)
-	looks: Look[];
+	@ApiProperty()
+	@ManyToMany(() => Category, (category: Category) => category.styles)
+	@JoinTable()
+	categories: Category[];
 }

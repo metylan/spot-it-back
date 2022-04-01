@@ -15,7 +15,7 @@ export class Category {
 	name!: string;
 
 	@ApiProperty()
-	@ManyToMany(() => Style)
+	@ManyToMany(() => Style, (style: Style) => style.categories)
 	styles: Style[];
 
 	@ApiProperty()

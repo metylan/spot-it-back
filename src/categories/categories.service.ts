@@ -14,11 +14,11 @@ export class CategoriesService {
 	}
 
 	findAll(): Promise<Category[]> {
-		return this.data.find();
+		return this.data.find({relations: ['styles']});
 	}
 
 	findOne(id: number): Promise<Category> {
-		return this.data.findOneOrFail(id).catch(() => {
+		return this.data.findOneOrFail(id, {relations: ['styles']}).catch(() => {
 			throw new NotFoundException(id);
 		});
 	}

@@ -14,11 +14,11 @@ export class StylesService {
 	}
 
 	findAll(): Promise<Style[]> {
-		return this.data.find();
+		return this.data.find({relations: ['categories']});
 	}
 
 	findOne(id: number): Promise<Style> {
-		return this.data.findOne(id);
+		return this.data.findOne(id,{relations: ['categories']});
 	}
 
 	async update(id: number, dto: UpdateStyleDto): Promise<Style> {
