@@ -10,6 +10,8 @@ export class StylesService {
 	constructor(@InjectRepository(Style) private data: Repository<Style>) {}
 
 	create(dto: CreateStyleDto) {
+		const defaultCat = dto.categories.filter(el => el.id === 1);
+		if (!defaultCat.length) dto.categories.push({id:1, name: 'Waiting', image: 'Waiting', styles: []});
 		return this.data.save(dto);
 	}
 

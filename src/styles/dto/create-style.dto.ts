@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsDefined, IsNotEmpty } from 'class-validator';
 import { Category } from 'src/categories/entities/category.entity';
 
 export class CreateStyleDto {
@@ -13,6 +13,6 @@ export class CreateStyleDto {
 	image!: string;
 
 	@ApiProperty()
-	@IsNotEmpty()
-	categories!: Category[];
+	@IsDefined()
+	categories: Category[];
 }

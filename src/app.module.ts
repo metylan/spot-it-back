@@ -9,6 +9,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { StylesModule } from './styles/styles.module';
 import { LooksModule } from './looks/looks.module';
 import { ProductsModule } from './products/products.module';
+import { join } from 'path';
 
 @Module({
 	imports: [
@@ -24,6 +25,11 @@ import { ProductsModule } from './products/products.module';
 			database: process.env.DB_NAME,
 			autoLoadEntities: true,
 			synchronize: true,
+			migrationsRun: true,
+			migrationsTableName: 'migration_history',
+			migrations: [
+				join(__dirname, 'migrations/*{.ts,.js}')
+			],
 		}),
 		AuthModule,
 		UsersModule,
