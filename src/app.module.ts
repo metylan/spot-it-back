@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
 import { StylesModule } from './styles/styles.module';
 import { LooksModule } from './looks/looks.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
 	imports: [
@@ -29,6 +30,7 @@ import { LooksModule } from './looks/looks.module';
 		CategoriesModule,
 		StylesModule,
 		LooksModule,
+		ProductsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

@@ -1,26 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateStyleDto } from './dto/create-style.dto';
 import { UpdateStyleDto } from './dto/update-style.dto';
+import { Repository, DeleteResult } from 'typeorm';
+import { Style } from './entities/style.entity';
 
 @Injectable()
 export class StylesService {
-	create(createStyleDto: CreateStyleDto) {
-		return 'This action adds a new style';
+	constructor(@InjectRepository(Style) private data: Repository<Style>) {}
+
+	create(dto: CreateStyleDto) {
+		return this.data.save(dto);
 	}
 
-	findAll() {
-		return `This action returns all styles`;
+	findAll(): Promise<Style[]> {
+		return this.data.find();
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} style`;
+	findOne(id: number): Promise<Style> {
+		return this.data.findOne(id);
 	}
 
-	update(id: number, updateStyleDto: UpdateStyleDto) {
-		return `This action updates a #${id} style`;
+	async update(id: number, dto: UpdateStyleDto): Promise<Style> {
+		const done = await this.data.update(id, dto);
+		if (done.affected != 1) throw new NotFoundException(id);
+		return this.findOne(id);
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} style`;
+	async remove(id: number) {
+		const done: DeleteResult = await this.data.delete(id);
+		if (done.affected !== 1) throw new NotFoundException(id);
 	}
 }
