@@ -19,9 +19,11 @@ export class RolesGuard implements CanActivate {
 		if (args && args.length === 2 && args[0] === 'Bearer') {
 			const token = args[1];
 			const jwts = new JwtService({ secret: process.env.JWT_SECRET || 'banana' });
-			const playload = jwts.decode(token) as [key: string];
-			const role = playload['role'];
-			return roles.includes(role);
+			const payload = jwts.decode(token) as [key: string];
+			const role = payload['role'];
+			const exp = payload['exp'];
+
+			return Date.now() < exp * 1000 && roles.includes(role);
 		} else {
 			return false;
 		}

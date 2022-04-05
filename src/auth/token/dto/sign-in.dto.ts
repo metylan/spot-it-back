@@ -6,6 +6,9 @@ export class SignInDto {
 	access_token: string;
 
 	@ApiProperty()
+	refresh_token: string;
+
+	@ApiProperty()
 	scope = '*';
 
 	@ApiProperty()

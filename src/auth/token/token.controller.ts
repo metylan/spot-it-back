@@ -1,16 +1,18 @@
-import { Controller, Get, UnauthorizedException, Headers } from '@nestjs/common';
+import { Controller, Get, UnauthorizedException, Headers, Post, Body } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOkResponse, ApiOperation, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { UsersService } from 'src/users/users.service';
 import { SignInDto } from './dto/sign-in.dto';
 import * as bcrypt from 'bcryptjs';
+import { ConfigService } from '@nestjs/config';
+import { RolesGuard } from 'src/security/roles.guard';
 
 @Controller('auth')
 export class TokenController {
 
 	constructor(
-		private users: UsersService,
-		private jwts: JwtService
+		private readonly users: UsersService,
+		private readonly jwts: JwtService,
 	) { }
 
 	@ApiOperation({ description: 'Authenticate a User' })
@@ -19,7 +21,7 @@ export class TokenController {
 		description: 'Authentification failed',
 		type: SignInDto
 	})
-	@Get()
+	@Get('/')
 	async signIn(@Headers('Authorization') auth: string) {
 		const args = auth && auth.split(' ');
 		if (args && args.length == 2 && args[0] == 'Basic') {
@@ -39,10 +41,67 @@ export class TokenController {
 						subject: mail,
 						expiresIn: 3600
 					});
+
+					cr.refresh_token = await this.jwts.sign({
+						id: usr.id,
+					}, {
+						subject: mail,
+						expiresIn: 604800
+					});
+
+					this.users.setCurrentRefreshToken(cr.refresh_token, usr.id);
+
 					return cr;
 				}
 			}
 		}
 		throw new UnauthorizedException('Invalid or missing basic credentials');
+	}
+
+	@ApiOperation({ description: 'Refresh Token user' })
+	@ApiOkResponse({ description: 'Token Refresh' })
+	@ApiUnauthorizedResponse({ description: 'Refresh failed' })
+	@Get('/refresh')
+	async refreshToken(@Headers('Authorization') auth: string) {
+		const args = auth && auth.split(' ');
+		if (args && args.length == 2 && args[0] == 'Bearer') {
+			const credentials = this.jwts.decode(args[1]);
+			const usr = await this.users.findOne(credentials['id']);
+			if (usr) {
+				if (usr.hashRefreshToken) {
+					if (await bcrypt.compare(args[1], usr.hashRefreshToken)) {
+						const cr = new SignInDto();
+						cr.scope = '*';
+						cr.expires_in = 3600;
+						cr.access_token = await this.jwts.sign({
+							id: usr.id,
+							role: usr.role
+						}, {
+							subject: usr.mail,
+							expiresIn: 3600
+						});
+
+						return cr;
+					}
+				}
+			}
+		}
+		throw new UnauthorizedException('Invalid or missing refresh token');
+	}
+
+	@ApiOperation({ description: 'Logout User' })
+	@Get('/logout')
+	async lougout(@Headers('Authorization') auth: string) {
+		const args = auth && auth.split(' ');
+		if (args && args.length == 2 && args[0] == 'Bearer') {
+			const credentials = this.jwts.decode(args[1]);
+			const usr = await this.users.findOne(credentials['id']);
+			if (usr) {
+				usr.hashRefreshToken = null;
+				this.users.update(usr.id, usr);
+			}
+		}
+		throw new UnauthorizedException('Invalid or missing token');
+
 	}
 }

@@ -28,4 +28,9 @@ export class User {
 	@Index()
 	@Column({ type: 'enum', enum: Role, default: Role.User })
 	role!: Role;
+
+	@ApiProperty()
+	@Column({ nullable: true })
+	@Exclude()
+	hashRefreshToken?: string;
 }

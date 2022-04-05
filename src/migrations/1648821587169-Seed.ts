@@ -5,13 +5,13 @@ export class Seed1648821587169 implements MigrationInterface {
 
 	public async up(run: QueryRunner): Promise<void> {
 		await run.manager.save(run.manager.create<Category>(Category, {
-			name: 'Waiting',
-			image: 'Waiting'
+			name: 'Brouillon',
+			image: 'Brouillon'
 		}));
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.query('DELETE * FROM category'); 
+		await queryRunner.query('DELETE * FROM category');
 	}
 
 }

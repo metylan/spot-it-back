@@ -14,7 +14,7 @@ import { join } from 'path';
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			envFilePath: '.env',
+			envFilePath: '.env'
 		}),
 		TypeOrmModule.forRoot({
 			type: 'mariadb',

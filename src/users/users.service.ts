@@ -10,6 +10,11 @@ import * as bcrypt from 'bcryptjs';
 export class UsersService {
 	constructor(@InjectRepository(User) private data: Repository<User>) { }
 
+	async setCurrentRefreshToken(refreshToken: string, id: number) {
+		const currentHashRefreshToken = await bcrypt.hash(refreshToken, process.env['HASH_SALT'] || 12);
+		await this.data.update(id, { hashRefreshToken: currentHashRefreshToken });
+	}
+
 
 	async create(dto: CreateUserDto) {
 		const salt = process.env['HASH_SALT'] || 12; // 12 rotations by default
