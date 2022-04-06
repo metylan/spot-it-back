@@ -33,13 +33,13 @@ export class TokenController {
 				if (await bcrypt.compare(pass, usr.hash)) {
 					const cr = new SignInDto();
 					cr.scope = '*';
-					cr.expires_in = 3600;
+					cr.expires_in = 120;
 					cr.access_token = await this.jwts.sign({
 						id: usr.id,
 						role: usr.role
 					}, {
 						subject: mail,
-						expiresIn: 3600
+						expiresIn: 120
 					});
 
 					cr.refresh_token = await this.jwts.sign({
