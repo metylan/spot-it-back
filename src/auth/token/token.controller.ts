@@ -1,11 +1,9 @@
-import { Controller, Get, UnauthorizedException, Headers, Post, Body } from '@nestjs/common';
+import { Controller, Get, UnauthorizedException, Headers, RequestTimeoutException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiOkResponse, ApiOperation, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { UsersService } from 'src/users/users.service';
 import { SignInDto } from './dto/sign-in.dto';
 import * as bcrypt from 'bcryptjs';
-import { ConfigService } from '@nestjs/config';
-import { RolesGuard } from 'src/security/roles.guard';
 
 @Controller('auth')
 export class TokenController {
@@ -33,13 +31,13 @@ export class TokenController {
 				if (await bcrypt.compare(pass, usr.hash)) {
 					const cr = new SignInDto();
 					cr.scope = '*';
-					cr.expires_in = 120;
+					cr.expires_in = 3600;
 					cr.access_token = await this.jwts.sign({
 						id: usr.id,
 						role: usr.role
 					}, {
 						subject: mail,
-						expiresIn: 120
+						expiresIn: 3600
 					});
 
 					cr.refresh_token = await this.jwts.sign({
@@ -70,18 +68,22 @@ export class TokenController {
 			if (usr) {
 				if (usr.hashRefreshToken) {
 					if (await bcrypt.compare(args[1], usr.hashRefreshToken)) {
-						const cr = new SignInDto();
-						cr.scope = '*';
-						cr.expires_in = 3600;
-						cr.access_token = await this.jwts.sign({
-							id: usr.id,
-							role: usr.role
-						}, {
-							subject: usr.mail,
-							expiresIn: 3600
-						});
+						if (Date.now() < credentials['exp'] * 1000) {
+							const cr = new SignInDto();
+							cr.scope = '*';
+							cr.expires_in = 3600;
+							cr.access_token = await this.jwts.sign({
+								id: usr.id,
+								role: usr.role
+							}, {
+								subject: usr.mail,
+								expiresIn: 3600
+							});
 
-						return cr;
+							return cr;
+						} else {
+							throw new RequestTimeoutException('Refresh token timeout');
+						}
 					}
 				}
 			}
@@ -97,8 +99,7 @@ export class TokenController {
 			const credentials = this.jwts.decode(args[1]);
 			const usr = await this.users.findOne(credentials['id']);
 			if (usr) {
-				usr.hashRefreshToken = null;
-				this.users.update(usr.id, usr);
+				this.users.setCurrentRefreshToken(null, usr.id);
 			}
 		}
 		throw new UnauthorizedException('Invalid or missing token');
