@@ -7,20 +7,20 @@ import { Style } from './entities/style.entity';
 
 @Injectable()
 export class StylesService {
-	constructor(@InjectRepository(Style) private data: Repository<Style>) {}
+	constructor(@InjectRepository(Style) private data: Repository<Style>) { }
 
 	create(dto: CreateStyleDto) {
 		const defaultCat = dto.categories.filter(el => el.id === 1);
-		if (!defaultCat.length) dto.categories.push({id:1, name: 'Waiting', image: 'Waiting', styles: []});
+		if (!defaultCat.length) dto.categories.push({ id: 1, name: 'Waiting', image: 'Waiting', styles: [] });
 		return this.data.save(dto);
 	}
 
 	findAll(): Promise<Style[]> {
-		return this.data.find({relations: ['categories']});
+		return this.data.find({ relations: ['categories', 'looks'] });
 	}
 
 	findOne(id: number): Promise<Style> {
-		return this.data.findOne(id,{relations: ['categories']});
+		return this.data.findOne(id, { relations: ['categories', 'looks'] });
 	}
 
 	async update(id: number, dto: UpdateStyleDto): Promise<Style> {

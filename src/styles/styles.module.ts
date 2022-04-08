@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Look } from 'src/looks/entities/look.entity';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Style, Look])],
+	imports: [TypeOrmModule.forFeature([Style])],
 	controllers: [StylesController],
 	providers: [StylesService]
 })

@@ -1,7 +1,8 @@
 /* eslint-disable indent */
-import { IsDefined, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Style } from 'src/styles/entities/style.entity';
+import { Look } from '../entities/look.entity';
 
 export class CreateLookDto {
 	@ApiProperty()
@@ -9,6 +10,8 @@ export class CreateLookDto {
 	name!: string;
 
 	@ApiProperty()
-	@IsDefined()
-	style!: Style;
+	styles: Style[];
+
+	@ApiProperty()
+	looks: Look[];
 }
