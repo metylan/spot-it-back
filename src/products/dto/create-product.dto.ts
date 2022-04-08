@@ -1,8 +1,6 @@
 /* eslint-disable indent */
-
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-
 
 export class CreateProductDto {
 	@ApiProperty()
@@ -16,4 +14,7 @@ export class CreateProductDto {
 	@ApiProperty()
 	@IsNotEmpty()
 	price!: number;
+
+	@ApiProperty()
+	description: string;
 }

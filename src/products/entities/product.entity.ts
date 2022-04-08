@@ -4,6 +4,7 @@ import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
+
 	@ApiProperty()
 	@PrimaryGeneratedColumn()
 	id!: number;
@@ -14,11 +15,14 @@ export class Product {
 	name!: string;
 
 	@ApiProperty()
+	@Column({ length: 255, nullable: true })
+	description: string;
+
+	@ApiProperty()
 	@Column()
 	image!: string;
 
 	@ApiProperty()
-	@Index()
 	@Column()
 	price!: number;
 }

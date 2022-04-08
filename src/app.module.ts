@@ -8,8 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
 import { StylesModule } from './styles/styles.module';
 import { LooksModule } from './looks/looks.module';
-import { ProductsModule } from './products/products.module';
 import { join } from 'path';
+import { ProductsModule } from './products/products.module';
 
 @Module({
 	imports: [
