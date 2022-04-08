@@ -16,5 +16,9 @@ export class CreateProductDto {
 	price!: number;
 
 	@ApiProperty()
+	@IsNotEmpty()
+	stock!: number;
+
+	@ApiProperty()
 	description: string;
 }

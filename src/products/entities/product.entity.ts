@@ -25,4 +25,8 @@ export class Product {
 	@ApiProperty()
 	@Column()
 	price!: number;
+
+	@ApiProperty()
+	@Column()
+	stock!: number;
 }
