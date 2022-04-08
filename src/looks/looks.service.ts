@@ -13,11 +13,11 @@ export class LooksService {
 	}
 
 	findAll(): Promise<Look[]> {
-		return this.data.find({ relations: ['styles'] });
+		return this.data.find({ relations: ['styles', 'products'] });
 	}
 
 	findOne(id: number): Promise<Look> {
-		return this.data.findOneOrFail(id, { relations: ['styles'] });
+		return this.data.findOneOrFail(id, { relations: ['styles', 'products'] });
 	}
 
 	async update(id: number, updateLookDto: UpdateLookDto): Promise<Look> {

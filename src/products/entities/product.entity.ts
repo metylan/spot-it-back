@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Look } from 'src/looks/entities/look.entity';
+import { Column, Entity, Index, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product {
@@ -29,4 +30,8 @@ export class Product {
 	@ApiProperty()
 	@Column()
 	stock!: number;
+
+	@ApiProperty()
+	@ManyToMany(() => Look)
+	looks: Look[];
 }

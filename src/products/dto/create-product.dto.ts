@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
+import { Look } from 'src/looks/entities/look.entity';
 
 export class CreateProductDto {
 	@ApiProperty()
@@ -21,4 +22,7 @@ export class CreateProductDto {
 
 	@ApiProperty()
 	description: string;
+
+	@ApiProperty()
+	looks: Look[];
 }
