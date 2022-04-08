@@ -10,6 +10,7 @@ import { StylesModule } from './styles/styles.module';
 import { LooksModule } from './looks/looks.module';
 import { join } from 'path';
 import { ProductsModule } from './products/products.module';
+import { ProductsListsModule } from './products-lists/products-lists.module';
 
 @Module({
 	imports: [
@@ -37,6 +38,7 @@ import { ProductsModule } from './products/products.module';
 		StylesModule,
 		LooksModule,
 		ProductsModule,
+		ProductsListsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
