@@ -5,12 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { CategoriesModule } from './categories/categories.module';
-import { StylesModule } from './styles/styles.module';
-import { LooksModule } from './looks/looks.module';
 import { join } from 'path';
-import { ProductsModule } from './products/products.module';
-import { ProductsListsModule } from './products-lists/products-lists.module';
 
 @Module({
 	imports: [
@@ -34,11 +29,6 @@ import { ProductsListsModule } from './products-lists/products-lists.module';
 		}),
 		AuthModule,
 		UsersModule,
-		CategoriesModule,
-		StylesModule,
-		LooksModule,
-		ProductsModule,
-		ProductsListsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
