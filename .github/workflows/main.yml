@@ -21,6 +21,7 @@ jobs:
       - run: |
           npm i
           npm run lint
+          
   deploy:
     runs-on: ubuntu-latest
     
@@ -28,7 +29,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Use Node.js 17
         uses: actions/setup-node@v3
-      - name: Deploy
+      - name: deploy
         run: |
-          npm i
-          echo ${{secrets.PRIVATE_KEY}} | npm run ssh-deploy
+            npm i
+            echo ${{secrets.PRIVATE_KEY}} | npm run ssh-deploy
