@@ -18,10 +18,10 @@ async function bootstrap() {
 	app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
 	const config = new DocumentBuilder()
-		.setTitle('Green Your Look api')
-		.setDescription('The Green Your Look API documentation')
+		.setTitle('Spotit api')
+		.setDescription('Spotit API documentation')
 		.setVersion('1.0.0')
-		.addTag('greenYourLook')
+		.addTag('Spotit')
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);

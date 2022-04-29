@@ -6,6 +6,9 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { join } from 'path';
+import { MarkersModule } from './markers/markers.module';
+import { AlbumModule } from './album/album.module';
+import { FaqModule } from './faq/faq.module';
 
 @Module({
 	imports: [
@@ -29,6 +32,9 @@ import { join } from 'path';
 		}),
 		AuthModule,
 		UsersModule,
+		MarkersModule,
+		AlbumModule,
+		FaqModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

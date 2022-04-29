@@ -18,4 +18,7 @@ export class CreateUserDto {
 
 	@ApiProperty({ enum: Role })
 	role!: Role;
+
+	@ApiProperty()
+	limit?: number;
 }
