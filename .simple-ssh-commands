@@ -1,5 +1,5 @@
 {
     "username": "liaxum",
     "host": "78.228.62.74",
-    "commands": ["cd dev/green-your-look", "git pull", "npm i", "npm run build"]
+    "commands": ["cd dev/spot-it", "git pull", "npm i", "npm run build"]
 }
