@@ -2,9 +2,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Role } from 'src/security/roles.enum';
-import {Column, Entity, Index, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, Index, ManyToMany, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Marker} from "../../markers/entities/marker.entity";
-import {Album} from "../../album/entities/album.entity";
 
 @Entity()
 export class User {
@@ -37,14 +36,10 @@ export class User {
 	hashRefreshToken?: string;
 
 	@ApiProperty()
-	@Column({type : 'number', default: 5})
+	@Column({type : 'int', default: 5})
 	limit?: number;
 
 	@ApiProperty()
-	@OneToMany(() => Marker, (marker: Marker) => marker.user)
+	@ManyToMany(() => Marker, (marker: Marker) => marker.user)
 	markers?: Marker[];
-
-	@ApiProperty()
-	@OneToMany(() => Album, (album: Album) => album.user)
-	album?: Album[];
 }

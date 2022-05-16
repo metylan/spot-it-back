@@ -30,12 +30,14 @@ export class UsersService {
 	}
 
 	findOne(id: number): Promise<User> {
+		// @ts-ignore
 		return this.data.findOneOrFail(id).catch(() => {
 			throw new NotFoundException(id);
 		});
 	}
 
 	findByMail(mail: string): Promise<User> {
+		// @ts-ignore
 		return this.data.findOne({ mail });
 	}
 
