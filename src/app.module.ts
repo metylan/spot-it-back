@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
+import {AuthModule} from "./auth/auth.module";
+import {MarkersModule} from "./markers/markers.module";
 
 @Module({
   imports: [
@@ -26,7 +28,9 @@ import { UsersModule } from './users/users.module';
         join(__dirname, 'migrations/*{.ts,.js}')
       ],
     }),
+    AuthModule,
     UsersModule,
+    MarkersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
