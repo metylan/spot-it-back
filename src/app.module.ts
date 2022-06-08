@@ -15,8 +15,7 @@ import {MarkersModule} from "./markers/markers.module";
     }),
     TypeOrmModule.forRoot({
       type: 'mariadb',
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
+      host: process.env.HOST,
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,

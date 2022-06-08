@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    'origin': ['http://localhost:8080', 'https://liaxum.github.io/green-your-look-vue/'],
+    'origin': ['http://localhost:8080', 'http://spotit.mety.fr'],
     'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     'allowedHeaders': 'Authorization, Content-Type, Accept',
     'credentials': true,
@@ -25,7 +25,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('doc', app, document);
-
+  app.setGlobalPrefix('spotit')
   await app.listen(8996);
 }
 bootstrap();
