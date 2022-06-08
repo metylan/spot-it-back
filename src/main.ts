@@ -24,7 +24,7 @@ async function bootstrap() {
       .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('doc', app, document);
+  SwaggerModule.setup('spotit/doc', app, document);
   app.setGlobalPrefix('spotit')
   await app.listen(8996);
 }
