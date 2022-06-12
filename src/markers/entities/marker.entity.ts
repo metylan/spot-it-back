@@ -14,11 +14,11 @@ export class Marker {
     name!: string;
 
     @ApiProperty()
-    @Column({type:"numeric"})
+    @Column({type:"double",length: 255})
     lat!: number;
 
     @ApiProperty()
-    @Column({type:"numeric"})
+    @Column({type:"double",length: 255})
     lng!: number;
 
     @ApiProperty()
