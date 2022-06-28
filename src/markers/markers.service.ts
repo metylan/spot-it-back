@@ -1,27 +1,28 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMarkerDto } from './dto/create-marker.dto';
 import { UpdateMarkerDto } from './dto/update-marker.dto';
-import {InjectRepository} from "@nestjs/typeorm";
-import {Marker} from "../markers/entities/marker.entity";
-import {DeleteResult, Repository} from "typeorm";
-import {User} from "../users/entities/user.entity";
-import {UpdateUserDto} from "../users/dto/update-user.dto";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Marker } from '../markers/entities/marker.entity';
+import { DeleteResult, Repository } from 'typeorm';
 
 @Injectable()
 export class MarkersService {
-  constructor(@InjectRepository(Marker) private data: Repository<Marker>) { }
-  create(createMarkerDto: CreateMarkerDto) {
-    return this.data.save(createMarkerDto);
+  constructor(@InjectRepository(Marker) private data: Repository<Marker>) {}
+
+  create(dto: CreateMarkerDto) {
+    return this.data.save(dto);
   }
+
   findAll(): Promise<Marker[]> {
     return this.data.find();
   }
 
-  findOne(id: number): Promise<Marker> {
-    // @ts-ignore
-    return this.data.findOneOrFail(id).catch(() => {
+  async findOne(id: number): Promise<Marker> {
+    try {
+      return await this.data.findOneByOrFail({ id: id });
+    } catch (err) {
       throw new NotFoundException(id);
-    });
+    }
   }
 
   async update(id: number, dto: UpdateMarkerDto): Promise<Marker> {

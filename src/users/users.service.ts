@@ -8,49 +8,55 @@ import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
-	constructor(@InjectRepository(User) private data: Repository<User>) { }
+  constructor(@InjectRepository(User) private data: Repository<User>) {}
 
-	async setCurrentRefreshToken(refreshToken: string, id: number) {
-		let currentHashRefreshToken = refreshToken;
-		if (refreshToken) {
-			currentHashRefreshToken = await bcrypt.hash(refreshToken, process.env['HASH_SALT'] || 12);
-		}
-		await this.data.update(id, { hashRefreshToken: currentHashRefreshToken });
-	}
+  async setCurrentRefreshToken(refreshToken: string, id: number) {
+    let currentHashRefreshToken = refreshToken;
+    if (refreshToken) {
+      currentHashRefreshToken = await bcrypt.hash(
+        refreshToken,
+        process.env['HASH_SALT'] || 12,
+      );
+    }
+    await this.data.update(id, { hashRefreshToken: currentHashRefreshToken });
+  }
 
+  async create(dto: CreateUserDto) {
+    const salt = process.env['HASH_SALT'] || 12; // 12 rotations by default
+    const hash = await bcrypt.hash(dto.password, salt);
+    return this.data.save({ ...dto, hash });
+  }
 
-	async create(dto: CreateUserDto) {
-		const salt = process.env['HASH_SALT'] || 12; // 12 rotations by default
-		const hash = await bcrypt.hash(dto.password, salt);
-		return this.data.save({ ...dto, hash });
-	}
+  findAll(): Promise<User[]> {
+    return this.data.find();
+  }
 
-	findAll(): Promise<User[]> {
-		return this.data.find();
-	}
+  async findOne(id: number): Promise<User> {
+    try {
+      return await this.data.findOneByOrFail({ id: id });
+    } catch (err) {
+      throw new NotFoundException(id);
+    }
+  }
 
-	findOne(id: number): Promise<User> {
-		// @ts-ignore
-		return this.data.findOneOrFail(id).catch(() => {
-			throw new NotFoundException(id);
-		});
-	}
+  async findByMail(mail: string): Promise<User> {
+    try {
+      return await this.data.findOneByOrFail({ mail: mail });
+    } catch (err) {
+      throw new NotFoundException(mail);
+    }
+  }
 
-	findByMail(mail: string): Promise<User> {
-		// @ts-ignore
-		return this.data.findOne({ mail });
-	}
+  async update(id: number, dto: UpdateUserDto): Promise<User> {
+    const salt = process.env['HASH_SALT'] || 12; // 12 Rotations by default
+    const hash = await bcrypt.hash(dto.password, salt);
+    const done = await this.data.update(id, { ...dto, hash });
+    if (done.affected != 1) throw new NotFoundException(id);
+    return this.findOne(id);
+  }
 
-	async update(id: number, dto: UpdateUserDto): Promise<User> {
-		const salt = process.env['HASH_SALT'] || 12; // 12 Rotations by default
-		const hash = await bcrypt.hash(dto.password, salt);
-		const done = await this.data.update(id, { ...dto, hash });
-		if (done.affected != 1) throw new NotFoundException(id);
-		return this.findOne(id);
-	}
-
-	async remove(id: number) {
-		const done: DeleteResult = await this.data.delete(id);
-		if (done.affected !== 1) throw new NotFoundException(id);
-	}
+  async remove(id: number) {
+    const done: DeleteResult = await this.data.delete(id);
+    if (done.affected !== 1) throw new NotFoundException(id);
+  }
 }
