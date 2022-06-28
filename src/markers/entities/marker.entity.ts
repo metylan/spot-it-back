@@ -23,11 +23,11 @@ export class Marker {
 
   @ApiProperty()
   @Column()
-  lat!: number;
+  lat!: string;
 
   @ApiProperty()
   @Column()
-  lng!: number;
+  lng!: string;
 
   @ApiProperty()
   @Column()

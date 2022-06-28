@@ -9,11 +9,11 @@ export class CreateMarkerDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    lat!: number;
+    lat!: string;
 
     @ApiProperty()
     @IsNotEmpty()
-    lng!: number;
+    lng!: string;
 
     @ApiProperty()
     com?: string;
