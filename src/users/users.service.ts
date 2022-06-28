@@ -10,17 +10,6 @@ import * as bcrypt from 'bcryptjs';
 export class UsersService {
   constructor(@InjectRepository(User) private data: Repository<User>) {}
 
-  async setCurrentRefreshToken(refreshToken: string, id: number) {
-    let currentHashRefreshToken = refreshToken;
-    if (refreshToken) {
-      currentHashRefreshToken = await bcrypt.hash(
-        refreshToken,
-        process.env['HASH_SALT'] || 12,
-      );
-    }
-    await this.data.update(id, { hashRefreshToken: currentHashRefreshToken });
-  }
-
   async create(dto: CreateUserDto) {
     const salt = process.env['HASH_SALT'] || 12; // 12 rotations by default
     const hash = await bcrypt.hash(dto.password, salt);
@@ -58,5 +47,15 @@ export class UsersService {
   async remove(id: number) {
     const done: DeleteResult = await this.data.delete(id);
     if (done.affected !== 1) throw new NotFoundException(id);
+  }
+  async setCurrentRefreshToken(refreshToken: string, id: number) {
+    let currentHashRefreshToken = refreshToken;
+    if (refreshToken) {
+      currentHashRefreshToken = await bcrypt.hash(
+        refreshToken,
+        process.env['HASH_SALT'] || 12,
+      );
+    }
+    await this.data.update(id, { hashRefreshToken: currentHashRefreshToken });
   }
 }
